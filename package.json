@@ -1,0 +1,12 @@
+{
+  "name": "mayura-spin-win",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Mayura Jewellers Spin & Win campaign for Vercel and Supabase",
+  "scripts": {
+    "dev": "vercel dev"
+  },
+  "devDependencies": {
+    "vercel": "^41.6.2"
+  }
+}

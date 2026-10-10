@@ -1,0 +1,1234 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <title>Mayura Jewellers | Spin & Win</title>
+
+  <link href="https\://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+
+
+  <style>
+
+    :root {
+
+      --navy: #0a1d39;
+
+      --gold: #d9ad49;
+
+      --light-gold: #f8db8b;
+
+      --cream: #fff0c3;
+
+    }
+
+
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+
+
+    html, body {
+
+      height: 100%;
+
+      width: 100%;
+
+      overflow-x: hidden;
+
+    }
+
+
+
+    body {
+
+      min-height: 100vh;
+
+      min-height: 100dvh;
+
+      background: radial-gradient(ellipse at 50% 25%, #24466f, #112b4c 48%, #07172e);
+
+      color: #fffaf0;
+
+      font-family: Inter, Arial, sans-serif;
+
+      text-align: center;
+
+      display: flex;
+
+      flex-direction: column;
+
+      justify-content: center;
+
+      align-items: center;
+
+      padding: 12px;
+
+    }
+
+
+
+    .page {
+
+      width: 100%;
+
+      max-width: 480px;
+
+      margin: auto;
+
+      display: flex;
+
+      flex-direction: column;
+
+      align-items: center;
+
+      justify-content: center;
+
+      gap: 8px;
+
+    }
+
+
+
+    .brand {
+
+      color: var(--light-gold);
+
+      font: 800 clamp(20px, 4.5vw, 32px) "Playfair Display", serif;
+
+      letter-spacing: 2px;
+
+      line-height: 1.2;
+
+    }
+
+
+
+    .brand-subtitle {
+
+      margin-top: 3px;
+
+      font-size: 10px;
+
+      letter-spacing: 3px;
+
+      color: #c8d5e7;
+
+    }
+
+
+
+    .brand-line {
+
+      width: 70px;
+
+      height: 1px;
+
+      background: var(--gold);
+
+      margin: 8px auto;
+
+    }
+
+
+
+    h1 {
+
+      font: 800 clamp(26px, 6vw, 42px) "Playfair Display", serif;
+
+      margin-bottom: 4px;
+
+      line-height: 1.1;
+
+    }
+
+
+
+    h1 span { color: var(--gold); }
+
+
+
+    .intro {
+
+      color: #dce6f5;
+
+      font-size: clamp(12px, 2.8vw, 15px);
+
+      line-height: 1.4;
+
+      margin-bottom: 4px;
+
+    }
+
+
+
+    .wheel-section {
+
+      width: min(75vw, 290px);
+
+      aspect-ratio: 1;
+
+      margin: 4px auto;
+
+      position: relative;
+
+    }
+
+
+
+    .wheel-frame {
+
+      width: 100%;
+
+      height: 100%;
+
+      padding: 6px;
+
+      border-radius: 50%;
+
+      background: linear-gradient(135deg, #fff0b4, #bd8c2d, #ffe9a0);
+
+      box-shadow: 0 0 0 2px #f8dc8b, 0 0 18px #d8ad4950, 0 8px 20px #0005;
+
+    }
+
+
+
+    canvas { width: 100%; height: 100%; display: block; }
+
+
+
+    .pointer {
+
+      position: absolute;
+
+      z-index: 3;
+
+      left: 50%;
+
+      top: -6px;
+
+      transform: translateX(-50%);
+
+      width: 0;
+
+      height: 0;
+
+      border-left: 14px solid transparent;
+
+      border-right: 14px solid transparent;
+
+      border-top: 28px solid var(--cream);
+
+      filter: drop-shadow(0 3px 3px #0007);
+
+    }
+
+
+
+    .center-spin {
+
+      position: absolute;
+
+      z-index: 4;
+
+      top: 50%;
+
+      left: 50%;
+
+      transform: translate(-50%, -50%);
+
+      width: 26%;
+
+      aspect-ratio: 1;
+
+      border-radius: 50%;
+
+      border: 5px solid #d6ad50;
+
+      background: radial-gradient(circle at 35% 25%, #183a60, #061831);
+
+      color: var(--light-gold);
+
+      font-size: clamp(11px, 2.2vw, 16px);
+
+      font-weight: 800;
+
+      letter-spacing: 1px;
+
+      cursor: pointer;
+
+      box-shadow: 0 0 0 3px #fff0c2, 0 3px 8px #0008;
+
+    }
+
+
+
+    button:disabled { opacity: .65; cursor: not-allowed; }
+
+
+
+    .try-button, .claim-button, .close-button {
+
+      width: 100%;
+
+      border: none;
+
+      border-radius: 12px;
+
+      font-weight: 800;
+
+      cursor: pointer;
+
+    }
+
+
+
+    .try-button {
+
+      max-width: 380px;
+
+      margin: 8px auto;
+
+      padding: 14px 12px;
+
+      color: #102849;
+
+      background: linear-gradient(110deg, #f9dc8e, #d8aa40);
+
+      box-shadow: 0 4px 0 #997126;
+
+      font-size: clamp(14px, 3.5vw, 17px);
+
+    }
+
+
+
+    .winning-result {
+
+      display: none;
+
+      width: 100%;
+
+      max-width: 380px;
+
+      margin: 8px auto;
+
+      padding: 14px;
+
+      border: 1px solid var(--gold);
+
+      border-radius: 12px;
+
+      background: #102849;
+
+    }
+
+
+
+    .winning-result h2 {
+
+      color: var(--light-gold);
+
+      font: 700 clamp(18px, 4vw, 22px) "Playfair Display", serif;
+
+      margin-bottom: 6px;
+
+    }
+
+
+
+    .winning-prize {
+
+      font-size: clamp(15px, 3.5vw, 18px);
+
+      font-weight: 800;
+
+      line-height: 1.4;
+
+      margin-bottom: 10px;
+
+    }
+
+
+
+    .winning-result .try-button {
+
+      margin: 0;
+
+      padding: 12px;
+
+    }
+
+
+
+    .footer {
+
+      font-size: clamp(10px, 2.2vw, 12px);
+
+      line-height: 1.4;
+
+      color: #c7d7ec;
+
+      margin-top: 4px;
+
+    }
+
+
+
+    .modal {
+
+      position: fixed;
+
+      inset: 0;
+
+      z-index: 10;
+
+      display: none;
+
+      align-items: center;
+
+      justify-content: center;
+
+      padding: 16px;
+
+      background: #020b18df;
+
+      overflow-y: auto;
+
+    }
+
+
+
+    .modal.open { display: flex; }
+
+
+
+    .modal-card {
+
+      width: min(100%, 380px);
+
+      margin: auto;
+
+      padding: 20px 18px;
+
+      border: 1px solid var(--gold);
+
+      border-radius: 16px;
+
+      background: linear-gradient(145deg, #17375b, #091a32);
+
+      text-align: left;
+
+    }
+
+
+
+    .modal-card h2 {
+
+      color: var(--light-gold);
+
+      font: 700 22px "Playfair Display", serif;
+
+      text-align: center;
+
+    }
+
+
+
+    .description {
+
+      margin: 8px 0 14px;
+
+      color: #d8e2f1;
+
+      font-size: 13px;
+
+      line-height: 1.5;
+
+      text-align: center;
+
+    }
+
+
+
+    .prize-result {
+
+      padding: 12px 10px;
+
+      margin-bottom: 14px;
+
+      border-radius: 10px;
+
+      background: #f4d889;
+
+      color: #102849;
+
+      font-weight: 800;
+
+      font-size: 16px;
+
+      text-align: center;
+
+    }
+
+
+
+    .form-group { margin-bottom: 12px; }
+
+
+
+    .form-group label {
+
+      display: block;
+
+      margin-bottom: 5px;
+
+      color: #f7e7bd;
+
+      font-size: 12px;
+
+      font-weight: 600;
+
+    }
+
+
+
+    .form-group input {
+
+      width: 100%;
+
+      padding: 11px 12px;
+
+      border: 1px solid #7589a3;
+
+      border-radius: 8px;
+
+      outline: none;
+
+      background: #fffdf7;
+
+      color: #102849;
+
+      font: inherit;
+
+      font-size: 14px;
+
+    }
+
+
+
+    .claim-button, .close-button { padding: 13px; font-size: 15px; }
+
+    .claim-button { background: linear-gradient(110deg, #f9dc8e, #d8aa40); color: #102849; }
+
+    .close-button { margin-top: 10px; background: #ffffff17; color: white; }
+
+
+
+    .success { display: none; text-align: center; }
+
+    .success p { color: #d8e2f1; font-size: 13px; line-height: 1.5; }
+
+
+
+    .code-box {
+
+      margin: 12px 0;
+
+      padding: 12px 8px;
+
+      border: 1px dashed var(--light-gold);
+
+      border-radius: 8px;
+
+      color: var(--light-gold);
+
+      font-size: 20px;
+
+      font-weight: 800;
+
+      overflow-wrap: anywhere;
+
+    }
+
+
+
+    */* Desktop and landscape adjustments */*
+
+    @media (min-width: 600px) {
+
+      .page { max-width: 520px; gap: 12px; }
+
+      .wheel-section { width: 310px; }
+
+    }
+
+  </style>
+
+</head>
+
+
+
+<body>
+
+  <main class="page">
+
+    <header>
+
+      <div class="brand">MAYURA JEWELLERS</div>
+
+      <div class="brand-subtitle">EST. 2004 · KANDIVALI EAST</div>
+
+      <div class="brand-line"></div>
+
+    </header>
+
+
+
+    <h1>SPIN <span>&amp;</span> WIN</h1>
+
+    <p class="intro">
+
+      A little sparkle, a lovely surprise. Spin the wheel for your Mayura offer!
+
+    </p>
+
+
+
+    <div class="wheel-section">
+
+      <div class="pointer"></div>
+
+      <div class="wheel-frame">
+
+        <canvas id="wheel" width="700" height="700"></canvas>
+
+      </div>
+
+      <button class="center-spin" id="centerSpin">SPIN</button>
+
+    </div>
+
+
+
+    <button class="try-button" id="tryButton">TRY YOUR LUCK</button>
+
+
+
+    <section class="winning-result" id="winningResult" aria-live="polite">
+
+      <h2>Congratulations!</h2>
+
+      <div class="winning-prize" id="winningPrize"></div>
+
+      <button class="try-button" id="claimButton">CLAIM MY OFFER</button>
+
+    </section>
+
+
+
+    <p class="footer">
+
+      One spin per customer · Offers are subject to in-store verification.<br>
+
+      Mayura Jewellers, Kandivali East, Mumbai.
+
+    </p>
+
+  </main>
+
+
+
+  <div class="modal" id="claimModal" role="dialog" aria-modal="true">
+
+    <div class="modal-card">
+
+      <div id="claimContent">
+
+        <h2>Claim Your Offer</h2>
+
+        <p class="description">Enter your details to register your prize.</p>
+
+        <div class="prize-result" id="prizeResult"></div>
+
+
+
+        <form id="claimForm">
+
+          <div class="form-group">
+
+            <label for="customerName">Your name</label>
+
+            <input id="customerName" name="name" type="text"
+
+              autocomplete="name" maxlength="100" required
+
+              placeholder="Enter your full name">
+
+          </div>
+
+
+
+          <div class="form-group">
+
+            <label for="customerMobile">Mobile number</label>
+
+            <input id="customerMobile" name="mobile" type="tel"
+
+              autocomplete="tel" inputmode="tel" required
+
+              pattern="[+]?[0-9 ]{10,15}"
+
+              placeholder="Enter your mobile number">
+
+          </div>
+
+
+
+          <button type="submit" class="claim-button">SUBMIT CLAIM</button>
+
+        </form>
+
+      </div>
+
+
+
+      <div class="success" id="successContent">
+
+        <h2>Offer Claimed!</h2>
+
+        <p>Your winning prize:</p>
+
+        <div class="prize-result" id="successPrize"></div>
+
+        <p>Your redemption code:</p>
+
+        <div class="code-box" id="redemptionCode"></div>
+
+        <p>Present this code at our showroom for verification.</p>
+
+        <button class="close-button" id="closeModal">CLOSE</button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+
+  <script>
+
+    const prizes = [
+
+      {
+
+        name: "Flat 25% off on Making Charges",
+
+        lines: ["Flat 25% off on", "Making Charges"],
+
+        color: "#fff0c3",
+
+        text: "#102849"
+
+      },
+
+      {
+
+        name: "₹1000 shopping voucher",
+
+        lines: ["₹1000 shopping", "voucher"],
+
+        color: "#18375e",
+
+        text: "#fff5d9"
+
+      },
+
+      {
+
+        name: "Free Silver Coin",
+
+        lines: ["Free Silver Coin"],
+
+        color: "#c99d40",
+
+        text: "#102849"
+
+      },
+
+      {
+
+        name: "Flat 50% off on Making Charges",
+
+        lines: ["Flat 50% off on", "Making Charges"],
+
+        color: "#f5d77f",
+
+        text: "#102849"
+
+      },
+
+      {
+
+        name: "Special Gift 🎁",
+
+        lines: ["Special Gift 🎁"],
+
+        color: "#173b64",
+
+        text: "#fff5d9"
+
+      }
+
+    ];
+
+
+
+    const STORAGE_KEY = "mayura_spin_v1";
+
+    const TAU = Math.PI * 2;
+
+    const slice = TAU / prizes.length;
+
+
+
+    const canvas = document.getElementById("wheel");
+
+    const ctx = canvas.getContext("2d");
+
+    const centerSpin = document.getElementById("centerSpin");
+
+    const tryButton = document.getElementById("tryButton");
+
+    const winningResult = document.getElementById("winningResult");
+
+    const claimModal = document.getElementById("claimModal");
+
+    const claimForm = document.getElementById("claimForm");
+
+
+
+    let rotation = 0;
+
+    let spinning = false;
+
+    let savedState = readState();
+
+
+
+    function readState() {
+
+      try {
+
+        return JSON.parse(localStorage.getItem(STORAGE_KEY));
+
+      } catch {
+
+        return null;
+
+      }
+
+    }
+
+
+
+    function saveState(state) {
+
+      try {
+
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+
+        return true;
+
+      } catch {
+
+        return false;
+
+      }
+
+    }
+
+
+
+    function drawWheel() {
+
+      const center = canvas.width / 2;
+
+      const radius = center - 9;
+
+
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+
+
+      prizes.forEach((prize, i) => {
+
+        const start = rotation + i * slice - Math.PI / 2;
+
+        const end = start + slice;
+
+        const middle = start + slice / 2;
+
+
+
+        ctx.beginPath();
+
+        ctx.moveTo(center, center);
+
+        ctx.arc(center, center, radius, start, end);
+
+        ctx.closePath();
+
+        ctx.fillStyle = prize.color;
+
+        ctx.fill();
+
+        ctx.strokeStyle = "#f5dc96";
+
+        ctx.lineWidth = 3;
+
+        ctx.stroke();
+
+
+
+        ctx.save();
+
+        ctx.translate(
+
+          center + Math.cos(middle) * radius * 0.59,
+
+          center + Math.sin(middle) * radius * 0.59
+
+        );
+
+        ctx.rotate(middle);
+
+
+
+        const angle = ((middle % TAU) + TAU) % TAU;
+
+        if (angle > Math.PI / 2 && angle < Math.PI * 1.5) {
+
+          ctx.rotate(Math.PI);
+
+        }
+
+
+
+        ctx.fillStyle = prize.text;
+
+        ctx.textAlign = "center";
+
+        ctx.textBaseline = "middle";
+
+        ctx.font = "bold 21px Inter, Arial, sans-serif";
+
+
+
+        const lineHeight = 27;
+
+        const firstY = -(prize.lines.length - 1) * lineHeight / 2;
+
+
+
+        prize.lines.forEach((line, lineIndex) => {
+
+          ctx.fillText(line, 0, firstY + lineIndex * lineHeight, radius * 0.72);
+
+        });
+
+
+
+        ctx.restore();
+
+      });
+
+
+
+      ctx.beginPath();
+
+      ctx.arc(center, center, radius - 3, 0, TAU);
+
+      ctx.strokeStyle = "#f7dc96";
+
+      ctx.lineWidth = 6;
+
+      ctx.stroke();
+
+    }
+
+
+
+    function displaySavedResult() {
+
+      if (!savedState || !Number.isInteger(savedState.index)) return;
+
+
+
+      rotation = Number(savedState.rotation) || 0;
+
+      drawWheel();
+
+
+
+      const prize = prizes[savedState.index];
+
+      if (!prize) return;
+
+
+
+      centerSpin.disabled = true;
+
+      tryButton.disabled = true;
+
+      centerSpin.textContent = "DONE";
+
+      tryButton.textContent = "SPIN ALREADY USED";
+
+
+
+      winningResult.style.display = "block";
+
+      document.getElementById("winningPrize").textContent = prize.name;
+
+
+
+      if (savedState.claimed) {
+
+        const claimBtn = document.getElementById("claimButton");
+
+        claimBtn.disabled = true;
+
+        claimBtn.textContent = "OFFER CLAIMED";
+
+      }
+
+    }
+
+
+
+    function spinWheel() {
+
+      if (spinning || savedState) return;
+
+
+
+      spinning = true;
+
+      centerSpin.disabled = true;
+
+      tryButton.disabled = true;
+
+      tryButton.textContent = "GOOD LUCK!";
+
+
+
+      const winningIndex = Math.floor(Math.random() * prizes.length);
+
+      const target = (TAU - (winningIndex + 0.5) * slice) % TAU;
+
+
+
+      const current = ((rotation % TAU) + TAU) % TAU;
+
+      const extraTurns = 6 + Math.floor(Math.random() * 3);
+
+      const distance = ((target - current + TAU) % TAU);
+
+      const startRotation = rotation;
+
+      const finalRotation = rotation + extraTurns * TAU + distance;
+
+      const duration = 6000;
+
+      const startTime = performance.now();
+
+
+
+      savedState = {
+
+        index: winningIndex,
+
+        rotation: target,
+
+        claimed: false,
+
+        claim: null
+
+      };
+
+
+
+      if (!saveState(savedState)) {
+
+        savedState = null;
+
+        spinning = false;
+
+        centerSpin.disabled = false;
+
+        tryButton.disabled = false;
+
+        return;
+
+      }
+
+
+
+      function animate(now) {
+
+        const elapsed = Math.min(now - startTime, duration);
+
+        const progress = elapsed / duration;
+
+        const eased = 1 - Math.pow(1 - progress, 4);
+
+
+
+        rotation = startRotation + (finalRotation - startRotation) * eased;
+
+        drawWheel();
+
+
+
+        if (elapsed < duration) {
+
+          requestAnimationFrame(animate);
+
+          return;
+
+        }
+
+
+
+        rotation = target;
+
+        drawWheel();
+
+
+
+        spinning = false;
+
+        displaySavedResult();
+
+      }
+
+
+
+      requestAnimationFrame(animate);
+
+    }
+
+
+
+    centerSpin.addEventListener("click", spinWheel);
+
+    tryButton.addEventListener("click", spinWheel);
+
+
+
+    document.getElementById("claimButton").addEventListener("click", () => {
+
+      if (!savedState || savedState.claimed) return;
+
+
+
+      document.getElementById("prizeResult").textContent =
+
+        prizes[savedState.index].name;
+
+
+
+      claimModal.classList.add("open");
+
+      document.getElementById("customerName").focus();
+
+    });
+
+
+
+    claimForm.addEventListener("submit", async event => {
+      event.preventDefault();
+      if (!savedState || savedState.claimed) return;
+      if (!claimForm.reportValidity()) return;
+
+      const name = document.getElementById("customerName").value.trim();
+      const mobile = document.getElementById("customerMobile").value.trim();
+      const prize = prizes[savedState.index]?.name;
+      if (!name || !mobile || !prize) return;
+
+      const submitButton = claimForm.querySelector('button[type="submit"]');
+      const originalText = submitButton.textContent;
+      submitButton.disabled = true;
+      submitButton.textContent = "SAVING...";
+
+      try {
+        const response = await fetch("/api/claim", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name, mobile, prize })
+        });
+        const result = await response.json().catch(() => ({}));
+        if (!response.ok) throw new Error(result.error || "Could not save your claim. Please try again.");
+
+        savedState.claimed = true;
+        savedState.claim = {
+          name,
+          mobile,
+          prize: result.prize || prize,
+          code: result.redemptionCode,
+          claimedAt: result.claimedAt
+        };
+        saveState(savedState);
+
+        document.getElementById("successPrize").textContent = savedState.claim.prize;
+        document.getElementById("redemptionCode").textContent = savedState.claim.code;
+        document.getElementById("claimContent").style.display = "none";
+        document.getElementById("successContent").style.display = "block";
+        displaySavedResult();
+      } catch (error) {
+        alert(error.message || "Unable to save your claim. Please check your connection and try again.");
+      } finally {
+        submitButton.disabled = false;
+        submitButton.textContent = originalText;
+      }
+    });
+
+    document.getElementById("closeModal").addEventListener("click", () => {
+
+      claimModal.classList.remove("open");
+
+    });
+
+
+
+    claimModal.addEventListener("click", event => {
+
+      if (event.target === claimModal) {
+
+        claimModal.classList.remove("open");
+
+      }
+
+    });
+
+
+
+    displaySavedResult();
+
+    drawWheel();
+
+  </script>
+
+</body>
+
+</html>
